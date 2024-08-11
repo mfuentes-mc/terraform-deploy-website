@@ -27,8 +27,10 @@ jobs:
 
       - name: Build Angular app
         id: build
+        working-directory: ./app-test
         run: |
           npm run build --prod
+        # Set output from the build step
         outputs:
           build-path: './app-test/dist/app-test/browser'
 
