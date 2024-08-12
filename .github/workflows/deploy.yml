@@ -48,7 +48,7 @@ jobs:
       - name: Print current directory
         run: pwd
       - name: List files for debugging
-        run: ls -la terraform/environments/${{ github.ref_name }}
+        run: ls -la
       - name: Deploy with Terraform
         working-directory: terraform/environments/${{ github.ref_name }}
         run: |
