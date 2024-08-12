@@ -33,7 +33,7 @@ jobs:
       
       - name: List build output
         working-directory: ./app-test
-        run: ls -R dist/browser
+        run: ls -R ./
   configure-aws:
     runs-on: ubuntu-latest
     needs: build
