@@ -43,11 +43,21 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Deploy with Terraform
+      - name: Terraform Init
         working-directory: ./terraform/environments/${{ github.ref_name }}
         run: |
           terraform init
+
+      - name: Terraform Plan
+        working-directory: ./terraform/environments/${{ github.ref_name }}
+        run: |
+          terraform workspace select ${{ github.ref_name }} || terraform workspace new ${{ github.ref_name }}
           terraform plan
+
+      - name: Terraform Apply
+        working-directory: ./terraform/environments/${{ github.ref_name }}
+        run: |
+          terraform workspace select ${{ github.ref_name }} || terraform workspace new ${{ github.ref_name }}
           terraform apply -auto-approve
 
       - name: Sync S3 bucket
