@@ -67,7 +67,7 @@ resource "aws_s3_bucket_policy" "angular_app_bucket_policy" {
 
   depends_on = [
     aws_s3_bucket.angular_app_bucket,
-    aws_s3_bucket_public_access_block.angular_app_public_access_block,
+    aws_s3_bucket_public_access_block.angular_app_bucket_public_access_block,
     aws_s3_bucket_ownership_controls.angular_app_bucket_ownership_controls
   ]
 }
