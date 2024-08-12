@@ -45,19 +45,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build, configure-aws]
     steps:
-    - name: Print current directory
-        run: pwd
-       - name: List files for debugging
-        working-directory: terraform
-        run: |
-          ls -la
-          cd environments
-          ls -la
-          cd ${{ github.ref_name }}
-          ls -la
-
-    - name: Deploy with Terraform
-        working-directory: terraform/environments/${{ github.ref_name }}
+      - name: Deploy with Terraform
+        working-directory: ./terraform/environments/${{ github.ref_name }}
         run: |
           terraform init
           terraform apply -auto-approve
