@@ -46,7 +46,7 @@ jobs:
     needs: [build, configure-aws]
     steps:
       - name: Print github.workspace value
-        run: echo "The value of github.workspace is: ${{ github.workspace }}"
+        run: echo "The value of github.workspace is: $GITHUB_WORKSPACE"
       - name: Deploy with Terraform
         working-directory: ${{ github.workspace }}/terraform/${{ github.ref_name }}
         run: |
