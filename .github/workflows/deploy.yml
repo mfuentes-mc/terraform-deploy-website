@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -30,10 +30,7 @@ jobs:
         working-directory: ./app-test
         run: |
           npm run build --prod
-  configure-aws:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -41,8 +38,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-2
 
-      - name: Checkout code
-        uses: actions/checkout@v2
       - name: Terraform Init
         working-directory: ./terraform/environments/${{ github.ref_name }}
         run: |
@@ -62,4 +57,4 @@ jobs:
 
       - name: Sync S3 bucket
         run: |
-          aws s3 sync . s3://angular-website-terraform6-dev/ --delete
+          aws s3 sync . s3://angular-website-terraform7-dev/ --delete
