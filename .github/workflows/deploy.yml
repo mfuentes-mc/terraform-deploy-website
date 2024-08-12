@@ -46,7 +46,7 @@ jobs:
     needs: [build, configure-aws]
     steps:
       - name: Deploy with Terraform
-        working-directory: ./terraform/${{ github.ref_name }}
+        working-directory: ../../terraform/${{ github.ref_name }}
         run: |
           terraform init
           terraform apply -auto-approve
