@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      build-path: ${{ steps.build.outputs.build-path }}/dist/app-test/browser
+      build-path: ./dist/app-test/browser
 
     steps:
       - name: Checkout code
@@ -62,4 +62,4 @@ jobs:
 
       - name: Sync S3 bucket
         run: |
-          aws s3 sync ${{ needs.build.outputs.build-path }} s3://angular-website-terraform3-${{ github.ref_name }}/ --delete
+          aws s3 sync ${{ needs.build.outputs.build-path }} s3://angular-website-terraform4-${{ github.ref_name }}/ --delete
