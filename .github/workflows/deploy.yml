@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      build-path: ${{ steps.build.outputs.build-path }}/app-test/dist/browser
+      build-path: ${{ steps.build.outputs.build-path }}/dist/app-test/browser
 
     steps:
       - name: Checkout code
@@ -30,10 +30,6 @@ jobs:
         working-directory: ./app-test
         run: |
           npm run build --prod
-      
-      - name: List build output
-        working-directory: ./app-test
-        run: ls -R ./dist
   configure-aws:
     runs-on: ubuntu-latest
     needs: build
