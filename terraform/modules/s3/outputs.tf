@@ -13,5 +13,5 @@ output "bucket_name" {
 
 output "bucket_url" {
   description = "URL of Bucket"
-  value = aws_s3_bucket_website_configuration.angular_app_bucket_website.website_domain
+  value = aws_s3_bucket_website_configuration.angular_app_bucket_website.website_endpoint
 }
