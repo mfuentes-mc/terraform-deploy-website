@@ -57,4 +57,4 @@ jobs:
 
       - name: Sync S3 bucket
         run: |
-          aws s3 sync ./app-test/dist/app-test/browser s3://angular-website-terraform10-dev/ --delete
+          aws s3 sync ./app-test/dist/app-test/browser s3://angular-website-terraform11-dev/ --delete
