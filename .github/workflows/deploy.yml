@@ -38,6 +38,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-2
 
+      - name: Check if bucket exists
+        id: check_bucket
+        run: |
+          BUCKET_NAME=angular-website-terraform-${{ github.ref_name }}
+          if aws s3api head-bucket --bucket "$BUCKET_NAME" 2>/dev/null; then
+            echo "Bucket $BUCKET_NAME already exists."
+            echo "create_bucket=false" >> $GITHUB_ENV
+          else
+            echo "Bucket $BUCKET_NAME does not exist."
+            echo "create_bucket=true" >> $GITHUB_ENV
+          fi
+
       - name: Terraform Init
         working-directory: ./terraform/environments/${{ github.ref_name }}
         run: |
@@ -47,14 +59,18 @@ jobs:
         working-directory: ./terraform/environments/${{ github.ref_name }}
         run: |
           terraform workspace select ${{ github.ref_name }} || terraform workspace new ${{ github.ref_name }}
-          terraform plan
+          terraform plan -var="create_bucket=${{ env.create_bucket }}"
 
       - name: Terraform Apply
         working-directory: ./terraform/environments/${{ github.ref_name }}
         run: |
           terraform workspace select ${{ github.ref_name }} || terraform workspace new ${{ github.ref_name }}
-          terraform apply -auto-approve
+          terraform apply -var="create_bucket=${{ env.create_bucket }}" -auto-approve
 
       - name: Sync S3 bucket
         run: |
+          if [ "${{ env.create_bucket }}" == "true" ]; then
+            echo "Bucket needs to be created."
+            # Additional logic can be added here if needed
+          fi
           aws s3 sync ./app-test/dist/app-test/browser s3://angular-website-terraform-${{ github.ref_name }}/ --delete

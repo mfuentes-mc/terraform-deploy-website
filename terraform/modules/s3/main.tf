@@ -9,14 +9,10 @@
 
 //1.se crear el recurso s3 con el bucket de acuerdo al 
 //que se definio en las variables
-data "aws_s3_bucket" "existing_bucket" {
-  bucket = "angular-website-fixed-name"
+resource "aws_s3_bucket" "angular_app_bucket" {
+  bucket = "${var.bucket-name}-${var.environment}"
 }
 
-resource "aws_s3_bucket" "angular_app_bucket" {
-  count  = length(data.aws_s3_bucket.existing_bucket.id) > 0 ? 0 : 1
-  bucket = "angular-website-fixed-name"
-}
 //2.Provides an S3 bucket website configuration resource. For more information
 resource "aws_s3_bucket_website_configuration" "angular_app_bucket_website" {
   bucket = aws_s3_bucket.angular_app_bucket.id
