@@ -61,7 +61,7 @@ jobs:
 
       - name: Terraform Apply
         working-directory: ./terraform/environments/${{ github.ref_name }}
-        if: env.EXISTS == 'false'
+        if: env.EXISTS == 'false' 
         run: |
           terraform workspace select ${{ github.ref_name }} || terraform workspace new ${{ github.ref_name }}
           terraform apply -var="bucket_name=angular-website-terraform-${{ github.ref_name }}" -auto-approve
