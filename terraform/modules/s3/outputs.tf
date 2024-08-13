@@ -10,3 +10,8 @@ output "bucket_name" {
   description = "Name of the S3 bucket"
   value       = aws_s3_bucket.angular_app_bucket.bucket
 }
+
+output "bucket_url" {
+  description = "URL of Bucket"
+  value = aws_s3_bucket.angular_app_bucket.website_domain
+}
