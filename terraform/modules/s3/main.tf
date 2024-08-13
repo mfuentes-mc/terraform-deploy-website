@@ -11,6 +11,7 @@
 //que se definio en las variables
 resource "aws_s3_bucket" "angular_app_bucket" {
   bucket = "${var.bucket-name}-${var.environment}"
+  count  = var.create_bucket ? 1 : 0
 }
 
 //2.Provides an S3 bucket website configuration resource. For more information
